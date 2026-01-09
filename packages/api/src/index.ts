@@ -19,5 +19,19 @@ const requireAuth = o.middleware(async ({ context, next }) => {
 
 export const protectedProcedure = publicProcedure.use(requireAuth);
 
-export type { Context } from "./context";
-export type { AppRouter, AppRouterClient } from "./routers/index";
+export const withTag = <T extends Record<string, any>>(
+  tag: string,
+  router: T
+): T => {
+  const result: Record<string, any> = {};
+
+  for (const [key, procedure] of Object.entries(router)) {
+    if (procedure && typeof procedure === "object" && "route" in procedure) {
+      result[key] = procedure.route({ tags: [tag] });
+    } else {
+      result[key] = procedure;
+    }
+  }
+
+  return result as T;
+};

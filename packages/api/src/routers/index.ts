@@ -1,22 +1,27 @@
 import type { RouterClient } from "@orpc/server";
 
-import { withTag, withProtectedTag } from "../helpers";
+import { protectedProcedure, publicProcedure, withTag } from "../index";
 import { todoRouter } from "./todo";
 
-const healthTag = withTag("Health");
-const userTag = withProtectedTag("User");
-
 export const appRouter = {
-  healthCheck: healthTag.handler(() => {
-    return "OK";
-  }, "Check API health status"),
+  ...withTag("Health", {
+    healthCheck: publicProcedure
+      .route({ summary: "Check API health status" })
+      .handler(() => {
+        return "OK";
+      }),
+  }),
 
-  privateData: userTag.handler(({ context }) => {
-    return {
-      message: "This is private",
-      user: context.session?.user,
-    };
-  }, "Get private user data"),
+  ...withTag("User", {
+    privateData: protectedProcedure
+      .route({ summary: "Get private user data" })
+      .handler(({ context }) => {
+        return {
+          message: "This is private",
+          user: context.session?.user,
+        };
+      }),
+  }),
 
   todo: todoRouter,
 };
