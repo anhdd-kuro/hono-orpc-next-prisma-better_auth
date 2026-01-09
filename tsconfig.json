@@ -1,0 +1,3 @@
+{
+  "extends": "@hono-orpc-next-prisma-better_auth/config/tsconfig.base.json"
+}
