@@ -18,3 +18,6 @@ const requireAuth = o.middleware(async ({ context, next }) => {
 });
 
 export const protectedProcedure = publicProcedure.use(requireAuth);
+
+export type { Context } from "./context";
+export type { AppRouter, AppRouterClient } from "./routers/index";

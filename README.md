@@ -14,6 +14,19 @@
 - **Authentication** - Better-Auth
 - **Turborepo** - Optimized monorepo build system
 
+## Project Structure
+
+```plain
+hono-orpc-next-prisma-better_auth/
+├── apps/
+│   ├── web/         # Frontend application (Next.js)
+│   └── server/      # Backend API (Hono, ORPC)
+├── packages/
+│   ├── api/         # API layer / business logic
+│   ├── auth/        # Authentication configuration & logic
+│   └── db/          # Database schema & queries
+```
+
 ## Getting Started
 
 First, install the dependencies:
@@ -41,21 +54,9 @@ Then, run the development server:
 pnpm run dev
 ```
 
-Open [http://localhost:3001](http://localhost:3001) in your browser to see the web application.
-The API is running at [http://localhost:3000](http://localhost:3000).
-
-## Project Structure
-
-```
-hono-orpc-next-prisma-better_auth/
-├── apps/
-│   ├── web/         # Frontend application (Next.js)
-│   └── server/      # Backend API (Hono, ORPC)
-├── packages/
-│   ├── api/         # API layer / business logic
-│   ├── auth/        # Authentication configuration & logic
-│   └── db/          # Database schema & queries
-```
+- Open [http://localhost:3001](http://localhost:3001) in your browser to see the web application.
+- The API is running at [http://localhost:3000](http://localhost:3000).
+-oRPC OpenAPI documentation is available at [http://localhost:3000/api-docs](http://localhost:3000/api-docs).
 
 ## Available Scripts
 

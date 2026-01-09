@@ -21,7 +21,7 @@ app.use(
     allowMethods: ["GET", "POST", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
     credentials: true,
-  }),
+  })
 );
 
 app.on(["POST", "GET"], "/api/auth/*", (c) => auth.handler(c.req.raw));
@@ -60,7 +60,7 @@ app.use("/*", async (c, next) => {
   }
 
   const apiResult = await apiHandler.handle(c.req.raw, {
-    prefix: "/api-reference",
+    prefix: "/api-docs",
     context: context,
   });
 
@@ -84,5 +84,5 @@ serve(
   },
   (info) => {
     console.log(`Server is running on http://localhost:${info.port}`);
-  },
+  }
 );

@@ -1,18 +1,20 @@
 import prisma from "@hono-orpc-next-prisma-better_auth/db";
 import z from "zod";
 
-import { publicProcedure } from "../index";
+import { withTag } from "../helpers";
+
+const todoTag = withTag("Todo");
 
 export const todoRouter = {
-  getAll: publicProcedure.handler(async () => {
+  getAll: todoTag.handler(async () => {
     return await prisma.todo.findMany({
       orderBy: {
         id: "asc",
       },
     });
-  }),
+  }, "Get all todos"),
 
-  create: publicProcedure
+  create: todoTag
     .input(z.object({ text: z.string().min(1) }))
     .handler(async ({ input }) => {
       return await prisma.todo.create({
@@ -20,20 +22,22 @@ export const todoRouter = {
           text: input.text,
         },
       });
-    }),
+    }, "Create a new todo"),
 
-  toggle: publicProcedure
+  toggle: todoTag
     .input(z.object({ id: z.number(), completed: z.boolean() }))
     .handler(async ({ input }) => {
       return await prisma.todo.update({
         where: { id: input.id },
         data: { completed: input.completed },
       });
-    }),
+    }, "Toggle todo completion status"),
 
-  delete: publicProcedure.input(z.object({ id: z.number() })).handler(async ({ input }) => {
-    return await prisma.todo.delete({
-      where: { id: input.id },
-    });
-  }),
+  delete: todoTag
+    .input(z.object({ id: z.number() }))
+    .handler(async ({ input }) => {
+      return await prisma.todo.delete({
+        where: { id: input.id },
+      });
+    }, "Delete a todo"),
 };
