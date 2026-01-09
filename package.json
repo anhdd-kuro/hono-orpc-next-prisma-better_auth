@@ -8,6 +8,7 @@
   "type": "module",
   "scripts": {
     "dev": "turbo dev",
+    "predev": "turbo db:start && turbo db:generate && turbo db:push",
     "build": "turbo build",
     "check-types": "turbo check-types",
     "dev:native": "turbo -F native dev",
